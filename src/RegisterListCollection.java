@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -63,25 +64,26 @@ public class RegisterListCollection {
 		Map<Customer,Register> map = new HashMap<Customer,Register>();
 		//create hash map with customer and register as key, value pairs
 		
-		List<Register> rl = new ArrayList<Register>();
+		List<Register> reglist = new ArrayList<Register>();
+		//Array containing list of registers
 		List<Customer> items = new ArrayList<Customer>();
-		
-		for(Register r: rl) {
+		//array containing last customers' item numbers
+		for(Register r : rl) {
 			if(r.getCustomers().size()==0) {
 				//if a register is empty
-				rl.add(r);
+				reglist.add(r);		
 				}
-			else {
+			else {	
 				Customer last = getLastCustomer(r.getCustomers());
 				//get the number of items of the last customer in a line
 				items.add(last);
 				map.put(last,r);
 				}
 		}
-		if(rl.size()>0) {
-			Collections.sort(rl);
-			return rl.get(0);
-			//returns if list is sorted
+		if(reglist.size()>0) {
+			Collections.sort(reglist);
+			return reglist.get(0);
+			//returns the shortest list
 		}
 		else {
 			Collections.sort(items);
@@ -114,6 +116,15 @@ public class RegisterListCollection {
 			sortedRL.add(r);
 		}
 		Collections.sort(sortedRL);
+		return sortedRL.get(0);
+	}
+	
+	public Register getShortestLineWithSize() {
+		List<Register> sortedRL = new ArrayList<Register>();
+		for(Register r: rl) {
+			sortedRL.add(r);
+		}
+		Collections.sort(sortedRL, Register.comp);
 		return sortedRL.get(0);
 	}
 }

@@ -24,6 +24,7 @@ public class GroceryStoreProcessor {
 		int registerNum  = Integer.parseInt(firstLine);
 		//read the first line from text file and assign that to registerNum 
 		//checker: System.out.println(registerNum);
+		
 		rl = new RegisterListCollection(registerNum);
 		//puts the number of register into register list
 		
@@ -46,14 +47,21 @@ public class GroceryStoreProcessor {
 		String[] items = currline.split(" ");
 		
 		if(items[0].equals("A")) {
+			System.out.println("New Customer detected. type A, arrival time: "
+								+Integer.parseInt(items[1])+", number of items: "+ Integer.parseInt(items[2]));
 			return new Customer(Integer.parseInt(items[2]), Type.A, Integer.parseInt(items[1]));
 		}
 		else if(items[0].equals("B")) {
+			System.out.println("New Customer detected. type B, arrival time: "
+					+Integer.parseInt(items[1])+", number of items: "+ Integer.parseInt(items[2]));
 			return new Customer(Integer.parseInt(items[2]), Type.B, Integer.parseInt(items[1]));
 		}
-		else {System.out.println("No valid customer type detected");}// if its neither A or B
-		System.exit(-1);
-		return null;
+		else {
+			System.out.println("No valid customer type detected");
+			System.exit(-1);
+			return null;
+			}// if its neither A or B
+		
 	}
 
 	public static void getSameTimeCustomers(List<Customer> sameTimeArrivalCustomers, int t) {
@@ -101,7 +109,7 @@ public class GroceryStoreProcessor {
 		Customer c1 = c.peek();
 		if (c1 != null && c1.itemsInCart() == 0) {
 			c.poll();
-			System.out.println("check out by regular cashier complete");
+			//System.out.println("check out by regular cashier complete");
 			//delete customer after there are no more items in cart
 			}
 	}
